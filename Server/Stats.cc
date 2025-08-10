@@ -12,7 +12,6 @@
 #include <thread>
 #include <atomic>
 
-// Simple HTTP POST using libcurl if available (enabled only when CMake defines HAS_LIBCURL)
 #ifdef HAS_LIBCURL
 #include <curl/curl.h>
 #endif
@@ -37,8 +36,7 @@ namespace Stats {
     }
 
     void init() {
-        // Prefer env var; optional .env loader could be added later
-        webhook_url = "https://discord.com/api/webhooks/1403790225888641136/3NeGLqVGpUo3cfdOcOte66gbWgT_aymaJyf9laDRksDWU4fG1ysFcrcDkLZmX4BKa__A";
+        webhook_url = "";
     }
 
     static uint32_t count_unique_rarity_petals() {
@@ -52,7 +50,7 @@ namespace Stats {
     }
 
     static void do_post() {
-        if (webhook_url.empty()) return; // disabled
+        if (webhook_url.empty()) return;
         uint32_t players_online = (uint32_t)Server::clients.size();
         uint32_t unique_count = count_unique_rarity_petals();
         std::string payload = build_payload_json(players_online, unique_count);
@@ -72,17 +70,13 @@ namespace Stats {
         (void)res;
         curl_slist_free_all(headers);
         curl_easy_cleanup(curl);
-#else
-        // No libcurl; could log once
 #endif
     }
 
     void tick() {
-        // Post every 60 seconds, or if a post was requested
         double now = (double)std::time(nullptr);
         if (pending_post || now - last_post_time >= 60.0) {
             last_post_time = now;
-            // Perform the post on a detached thread to avoid any blocking
             std::thread([](){ do_post(); }).detach();
             pending_post = false;
         }
@@ -92,4 +86,3 @@ namespace Stats {
         pending_post = true;
     }
 }
-
