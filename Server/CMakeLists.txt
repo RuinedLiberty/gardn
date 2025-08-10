@@ -18,6 +18,7 @@ set(SOURCES
     Process/Motion.cc
     Process/Petal.cc
     Process/Segment.cc
+    Accounts.cc
     Client.cc
     Main.cc
     Native.cc
@@ -60,8 +61,12 @@ endif()
 target_include_directories(gardn-server PRIVATE
     ${CMAKE_SOURCE_DIR}/uWebSockets/src
     ${CMAKE_SOURCE_DIR}/uWebSockets/uSockets/src
+    ${CMAKE_SOURCE_DIR}/uWebSockets/uSockets/boringssl/include
     ..
 )
+
+# Build BoringSSL locally (static)
+add_subdirectory(uWebSockets/uSockets/boringssl EXCLUDE_FROM_ALL)
 
 # Link directories and libraries
 target_link_directories(gardn-server PRIVATE ${CMAKE_SOURCE_DIR}/uWebSockets/uSockets)
@@ -70,6 +75,7 @@ target_link_libraries(gardn-server
     uv
     z
     -l:uSockets.a
+    crypto
 )
 
 # Try to link libcurl if available for webhook support

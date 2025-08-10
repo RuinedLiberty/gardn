@@ -1,6 +1,7 @@
 #include <Server/Server.hh>
 
 #include <Server/Client.hh>
+#include <Server/Accounts.hh>
 
 #include <Shared/Binary.hh>
 #include <Shared/Map.hh>
@@ -67,6 +68,7 @@ void Server::tick() {
     for (Client *client : Server::clients) _update_client(client->simulation, client);
     Server::simulation.post_tick();
     Stats::tick();
+    Accounts::tick();
     auto end = std::chrono::steady_clock::now();
     std::chrono::duration<double, std::milli> tick_time = end - start;
     if (tick_time > 2ms) std::cout << "tick took " << tick_time << '\n';
@@ -76,5 +78,6 @@ void Server::init() {
     for (uint32_t i = 0; i < ENTITY_CAP / 2; ++i)
         Map::spawn_random_mob(&Server::simulation);
     Stats::init();
+    Accounts::init();
     Server::run();
 }

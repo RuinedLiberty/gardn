@@ -1,5 +1,6 @@
 #include <Server/EntityFunctions.hh>
 
+#include <Server/Accounts.hh>
 #include <Server/PetalTracker.hh>
 #include <Server/Spawn.hh>
 
@@ -63,6 +64,7 @@ void entity_on_death(Simulation *sim, Entity const &ent) {
     if (ent.has_component(kScore) && sim->ent_exists(ent.last_damaged_by) && !natural_despawn) {
         EntityID killer_id = sim->get_ent(ent.last_damaged_by).base_entity;
         __add_score(sim, killer_id, ent);
+        if (sim->ent_exists(killer_id)) Accounts::on_kill(sim, sim->get_ent(killer_id));
     }
     if (ent.has_component(kMob)) {
         //if (!(ent.team == NULL_ENTITY)) return;
@@ -87,6 +89,7 @@ void entity_on_death(Simulation *sim, Entity const &ent) {
         if (ent.petal_id == PetalID::kWeb || ent.petal_id == PetalID::kTriweb)
             alloc_web(sim, 100, ent);
     } else if (ent.has_component(kFlower)) {
+        Accounts::on_death(sim, ent);
         std::vector<PetalID::T> potential = {};
         for (uint32_t i = 0; i < ent.loadout_count + MAX_SLOT_COUNT; ++i) {
             DEBUG_ONLY(assert(ent.loadout_ids[i] < PetalID::kNumPetals));

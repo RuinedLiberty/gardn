@@ -18,3 +18,186 @@
 84.133.184.11 - - [10/Aug/2025 07:04:15] "GET / HTTP/1.1" 200 -
 84.133.184.11 - - [10/Aug/2025 07:04:16] "GET /gardn-client.js HTTP/1.1" 200 -
 84.133.184.11 - - [10/Aug/2025 07:04:16] "GET /gardn-client.wasm HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 07:05:30] "GET / HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 07:05:31] "GET /gardn-client.js HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 07:05:31] "GET /gardn-client.wasm HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 07:05:32] code 404, message File not found
+84.133.184.11 - - [10/Aug/2025 07:05:32] "GET /favicon.ico HTTP/1.1" 404 -
+84.133.184.11 - - [10/Aug/2025 07:05:58] "GET / HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 07:05:58] "GET /gardn-client.js HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 07:05:59] "GET /gardn-client.wasm HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 07:06:12] "GET / HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 07:06:13] "GET /gardn-client.js HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 07:06:13] "GET /gardn-client.wasm HTTP/1.1" 200 -
+35.237.4.214 - - [10/Aug/2025 07:06:31] "GET / HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 07:06:44] "GET / HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 07:06:44] "GET /gardn-client.js HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 07:06:45] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 07:06:53] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 07:06:54] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 07:06:54] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 07:07:14] "GET /?v=2 HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 07:07:14] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 07:07:14] "GET /gardn-client.wasm HTTP/1.1" 200 -
+35.227.62.178 - - [10/Aug/2025 07:19:49] "GET / HTTP/1.1" 200 -
+108.181.5.193 - - [10/Aug/2025 07:28:43] "GET / HTTP/1.1" 200 -
+108.181.5.193 - - [10/Aug/2025 07:28:44] "GET /gardn-client.js HTTP/1.1" 200 -
+108.181.5.193 - - [10/Aug/2025 07:28:45] "GET /gardn-client.wasm HTTP/1.1" 200 -
+108.181.5.193 - - [10/Aug/2025 07:28:45] code 404, message File not found
+108.181.5.193 - - [10/Aug/2025 07:28:45] "GET /favicon.ico HTTP/1.1" 404 -
+14.152.91.158 - - [10/Aug/2025 07:29:04] "GET / HTTP/1.1" 200 -
+27.44.125.108 - - [10/Aug/2025 07:29:05] "GET /gardn-client.js HTTP/1.1" 200 -
+14.152.91.159 - - [10/Aug/2025 07:29:06] "GET /gardn-client.wasm HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('14.152.91.159', 12630)
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 317, in _handle_request_noblock
+    self.process_request(request, client_address)
+  File "/usr/lib/python3.11/socketserver.py", line 348, in process_request
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python3.11/http/server.py", line 667, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 432, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 420, in handle_one_request
+    method()
+  File "/usr/lib/python3.11/http/server.py", line 674, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.11/http/server.py", line 873, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.11/shutil.py", line 200, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+49.177.60.53 - - [10/Aug/2025 07:33:04] "GET / HTTP/1.1" 200 -
+49.177.60.53 - - [10/Aug/2025 07:33:04] "GET / HTTP/1.1" 200 -
+49.177.60.53 - - [10/Aug/2025 07:33:04] "GET /gardn-client.js HTTP/1.1" 200 -
+49.177.60.53 - - [10/Aug/2025 07:33:05] "GET /gardn-client.wasm HTTP/1.1" 200 -
+49.177.60.53 - - [10/Aug/2025 07:33:06] code 404, message File not found
+49.177.60.53 - - [10/Aug/2025 07:33:06] "GET /favicon.ico HTTP/1.1" 404 -
+84.133.184.11 - - [10/Aug/2025 08:07:02] "GET / HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 08:07:04] "GET /gardn-client.js HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 08:07:05] "GET /gardn-client.wasm HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 08:07:05] code 404, message File not found
+84.133.184.11 - - [10/Aug/2025 08:07:05] "GET /favicon.ico HTTP/1.1" 404 -
+35.237.4.214 - - [10/Aug/2025 08:07:39] "GET / HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 08:10:00] "GET / HTTP/1.1" 200 -
+112.141.166.226 - - [10/Aug/2025 08:10:00] "GET / HTTP/1.1" 200 -
+112.141.166.226 - - [10/Aug/2025 08:10:00] "GET / HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 08:10:00] "GET / HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 08:10:00] "GET / HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 08:10:00] "GET / HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 08:10:10] "GET / HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 08:10:11] "GET /gardn-client.js HTTP/1.1" 200 -
+84.133.184.11 - - [10/Aug/2025 08:10:11] "GET /gardn-client.wasm HTTP/1.1" 200 -
+87.120.191.6 - - [10/Aug/2025 08:12:38] "GET / HTTP/1.1" 200 -
+50.67.6.166 - - [10/Aug/2025 08:39:31] "GET / HTTP/1.1" 200 -
+50.67.6.166 - - [10/Aug/2025 08:39:31] "GET /gardn-client.js HTTP/1.1" 200 -
+50.67.6.166 - - [10/Aug/2025 08:39:31] code 404, message File not found
+50.67.6.166 - - [10/Aug/2025 08:39:31] "GET /favicon.ico HTTP/1.1" 404 -
+50.67.6.166 - - [10/Aug/2025 08:39:32] "GET /gardn-client.wasm HTTP/1.1" 200 -
+35.227.62.178 - - [10/Aug/2025 08:58:07] "GET / HTTP/1.1" 200 -
+104.28.228.198 - - [10/Aug/2025 09:22:49] "GET / HTTP/1.1" 200 -
+104.28.228.198 - - [10/Aug/2025 09:22:50] "GET /gardn-client.js HTTP/1.1" 200 -
+104.28.228.198 - - [10/Aug/2025 09:22:51] "GET /gardn-client.wasm HTTP/1.1" 200 -
+104.28.228.198 - - [10/Aug/2025 09:22:51] code 404, message File not found
+104.28.228.198 - - [10/Aug/2025 09:22:51] "GET /favicon.ico HTTP/1.1" 404 -
+209.38.84.159 - - [10/Aug/2025 10:02:57] code 400, message Bad request version ('À\\x14À')
+209.38.84.159 - - [10/Aug/2025 10:02:57] "\x16\x03\x01\x00{\x01\x00\x00w\x03\x03k~\x8eÊAüIíý²{ ËÒKÜY\x82vf¬\x8a¿7ìd«\x04~ÀõJ\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À" 400 -
+209.38.84.159 - - [10/Aug/2025 10:02:58] code 400, message Bad HTTP/0.9 request type ('\\x16\\x03\\x01\\x00{\\x01\\x00\\x00w\\x03\\x03\\x8fÆ\\x00\\x07q\\x15ªU"O\\x99YÔaáÖ=69\\x8fSDò¶!W8ÎÏ\\x84\\x80¶\\x00\\x00\\x1aÀ/À+À\\x11À\\x07À\\x13À')
+209.38.84.159 - - [10/Aug/2025 10:02:58] "\x16\x03\x01\x00{\x01\x00\x00w\x03\x03\x8fÆ\x00\x07q\x15ªU"O\x99YÔaáÖ=69\x8fSDò¶!W8ÎÏ\x84\x80¶\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À" 400 -
+209.38.84.159 - - [10/Aug/2025 10:02:58] "GET / HTTP/1.1" 200 -
+209.38.84.159 - - [10/Aug/2025 10:02:59] code 404, message File not found
+209.38.84.159 - - [10/Aug/2025 10:02:59] "GET /login HTTP/1.1" 404 -
+24.132.153.180 - - [10/Aug/2025 10:03:26] "GET /?v=2 HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 10:03:26] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 10:03:27] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 10:03:27] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 10:04:13] "GET /?v=2 HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 10:04:13] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 10:04:13] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 10:07:24] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 10:07:24] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 10:07:24] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 10:07:27] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 10:07:27] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 10:07:28] "GET /gardn-client.wasm HTTP/1.1" 200 -
+172.236.228.224 - - [10/Aug/2025 10:47:36] code 400, message Bad request syntax ('\\x16\\x03\\x01\\x01')
+172.236.228.224 - - [10/Aug/2025 10:47:36] "\x16\x03\x01\x01" 400 -
+172.236.228.224 - - [10/Aug/2025 10:47:36] code 400, message Bad request syntax ('\\x16\\x03\\x01\\x01')
+172.236.228.224 - - [10/Aug/2025 10:47:36] "\x16\x03\x01\x01" 400 -
+52.167.144.209 - - [10/Aug/2025 11:04:08] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:15:51] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:15:51] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:15:52] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:16:11] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:16:11] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:16:12] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:17:06] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:17:07] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:17:07] "GET /gardn-client.wasm HTTP/1.1" 200 -
+50.204.235.222 - - [10/Aug/2025 11:24:43] "GET / HTTP/1.1" 200 -
+50.204.235.222 - - [10/Aug/2025 11:24:43] "GET /gardn-client.js HTTP/1.1" 200 -
+50.204.235.222 - - [10/Aug/2025 11:24:44] "GET /gardn-client.wasm HTTP/1.1" 200 -
+50.204.235.222 - - [10/Aug/2025 11:25:42] "GET / HTTP/1.1" 200 -
+35.203.211.83 - - [10/Aug/2025 11:37:00] code 400, message Bad request version ('À\\x13À')
+35.203.211.83 - - [10/Aug/2025 11:37:00] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03\x8cw¨sW£\x0f5èoÁ>]T*\x19·*?¬Zm\x0fQËþß\x89K°%Q ØqÓbÄ°{\x8a£o·¯Ù4BòK\x1d®ê9±\x09Àdþ>ÿ\x11½t\x8e\x00&À+À/À,À0Ì©Ì¨À\x09À\x13À" 400 -
+35.203.211.83 - - [10/Aug/2025 11:37:00] code 400, message Bad request version ('À(À$À\\x14À')
+35.203.211.83 - - [10/Aug/2025 11:37:00] "\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03ï¨îBÒe\x86Ô\x95>0\x99Â)íp\x02mÜÔð5Ö¿ª\x09¬á\x0e\x15\x83×\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À'À#À\x13À\x09À(À$À\x14À" 400 -
+50.204.235.222 - - [10/Aug/2025 11:48:10] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:56:49] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:56:49] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:56:49] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:56:50] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:56:50] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:58:29] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:58:29] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:58:30] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:58:46] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:58:46] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:58:47] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:59:00] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:59:01] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 11:59:01] "GET /gardn-client.wasm HTTP/1.1" 200 -
+99.227.106.107 - - [10/Aug/2025 12:09:53] "GET / HTTP/1.1" 200 -
+99.227.106.107 - - [10/Aug/2025 12:09:53] "GET /gardn-client.js HTTP/1.1" 200 -
+99.227.106.107 - - [10/Aug/2025 12:09:53] "GET /gardn-client.wasm HTTP/1.1" 200 -
+99.227.106.107 - - [10/Aug/2025 12:09:53] code 404, message File not found
+99.227.106.107 - - [10/Aug/2025 12:09:53] "GET /favicon.ico HTTP/1.1" 404 -
+24.132.153.180 - - [10/Aug/2025 12:28:16] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:28:16] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:28:16] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:28:18] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:28:18] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:28:19] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:28:32] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:28:32] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:28:33] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:28:42] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:28:42] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:28:42] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:34:14] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:34:15] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:34:15] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:38:52] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:38:52] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:38:53] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:46:47] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:46:47] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:46:48] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:47:13] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:47:13] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:47:14] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:47:27] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:47:27] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:47:27] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:47:27] "GET /gardn-client.wasm HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:55:24] "GET / HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:55:24] "GET /gardn-client.js HTTP/1.1" 200 -
+24.132.153.180 - - [10/Aug/2025 12:55:25] "GET /gardn-client.wasm HTTP/1.1" 200 -
