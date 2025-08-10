@@ -36,15 +36,14 @@ namespace Stats {
     }
 
     void init() {
-        webhook_url = "";
+        webhook_url = getenv_str("GARDN_STATS_WEBHOOK_URL");
     }
 
     static uint32_t count_unique_rarity_petals() {
         uint32_t sum = 0;
         for (uint32_t i = 0; i < PetalID::kNumPetals; ++i) {
-            if (PETAL_DATA[i].rarity == RarityID::kUnique) {
+            if (PETAL_DATA[i].rarity == RarityID::kUnique)
                 sum += PetalTracker::get_count(static_cast<PetalID::T>(i));
-            }
         }
         return sum;
     }
