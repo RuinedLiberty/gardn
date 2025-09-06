@@ -149,6 +149,7 @@ void draw_static_petal_single(PetalID::T id, Renderer &ctx) {
             ctx.set_fill(0x59ffffff);
             ctx.fill();
             break;
+        case PetalID::kTriFaster:
         case PetalID::kFaster:
             ctx.set_fill(0xfffeffc9);
             ctx.set_stroke(0xffcecfa3);
@@ -227,6 +228,7 @@ void draw_static_petal_single(PetalID::T id, Renderer &ctx) {
             ctx.stroke();
             break;
         }
+        case PetalID::kEntennae:
         case PetalID::kAntennae: {
             ctx.round_line_cap();
             ctx.round_line_join();
@@ -295,6 +297,7 @@ void draw_static_petal_single(PetalID::T id, Renderer &ctx) {
             ctx.arc(0,0,8);
             ctx.fill();
             break;
+        case PetalID::kFatPeas:
         case PetalID::kPoisonPeas:
             ctx.set_fill(0xffce76db);
             ctx.set_stroke(0xffa760b1);

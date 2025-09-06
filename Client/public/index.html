@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <link href="https://fonts.googleapis.com/css?family=Ubuntu:700" rel="stylesheet" type="text/css">
-        <style>
-            * {
-                margin: 0px;
-                padding: 0px;
-                overflow: hidden;
-            }
-            #canvas {
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>gardn.pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon-32x32.png" type="image/png">
+ <style>            
+             #canvas {
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -18,33 +17,30 @@
                 height: 100%;
                 cursor: default;
             }
-            #loading-bar {
-                position: absolute;
-                top: 0%;
-                left: 0%;
-                width: 100%;
-                height: 100%;
-                background-color: #000000;
-            }
-            #loading {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                font-size: 48pt;
-                font-family: sans-serif;
-                transform: translate(-50%, -50%);
-                color: #ffffff;
-                font-weight: bold;
-            }
-        </style>
-        <meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
-    </head>
-    <body>
-    <div id="loading-bar">
-        <span id="loading">Loading</span>
+            </style>
+  <style>*{box-sizing:border-box;margin:0;padding:0}body,html{height:100%}body{display:flex;align-items:center;justify-content:center;background:#121212;color:#fff;font-family:Ubuntu,sans-serif;overflow:hidden;text-align:center;padding:2rem}#loading-container{display:flex;flex-direction:column;align-items:center;gap:1.5rem;animation:fadeIn .4s ease both}#loading{display:inline-flex;align-items:flex-end;gap:.15rem;font-size:3rem;font-weight:700;color:#fff;animation:pulse 1.5s infinite}.favicon{width:.3em;height:.3em;object-fit:contain;animation:spin 2.5s linear infinite,dotfade 1.5s infinite;user-select:none;-webkit-user-drag:none;vertical-align:baseline;margin-bottom:.15em;opacity:.2}.favicon:nth-child(2){animation-delay:0s,0s}.favicon:nth-child(3){animation-delay:0s,.3s}.favicon:nth-child(4){animation-delay:0s,.6s}#loading-info{font-size:1rem;color:#cfcfcf;max-width:900px;line-height:1.5;font-weight:700}@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}@keyframes dotfade{0%{opacity:.2}30%{opacity:1}60%{opacity:.2}100%{opacity:.2}}@media (prefers-reduced-motion:reduce){.favicon{animation:none}#loading-container{animation:none}#loading{animation:none}}.discord-link,.email-link{color:#cfcfcf;font-weight:700;text-decoration:none;transition:color .3s ease}.discord-link:hover,.email-link:hover{color:#fff}</style>
+     <meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+</head>
+<body>
+  <div id="loading-container">
+    <div id="loading">
+      Loading
+      <img src="favicon-32x32.png" alt="" class="favicon" draggable="false">
+      <img src="favicon-32x32.png" alt="" class="favicon" draggable="false">
+      <img src="favicon-32x32.png" alt="" class="favicon" draggable="false">
     </div>
-    <div id="font-loader" style="font-family: Ubuntu;">hello!</div>
+
+<div id="loading-info">
+  If the game isn't loading, try clearing your cache for this site<br><br>
+  If that is unavailable, feel free to inquire with our support team at 
+  <a href="mailto:support@gardn.pro" class="email-link">support@gardn.pro</a>, <br>
+  or ask an associate in our 
+  <a href="https://discord.gg/florr" target="_blank" class="discord-link">Discord</a>
+</div>
+  </div>
+
     <canvas id="canvas" width="0" height="0"></canvas>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const script = document.createElement('script');
@@ -53,5 +49,5 @@
             document.body.appendChild(script);
         });
     </script>
-    </body>
+</body>
 </html>

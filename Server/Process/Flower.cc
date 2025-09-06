@@ -34,6 +34,8 @@ static struct PlayerBuffs _get_petal_passive_buffs(Simulation *sim, Entity &play
             player.set_equip_flags(player.get_equip_flags() | (1 << petal_data.attributes.equipment));
         if (slot_petal_id == PetalID::kAntennae) {
             buffs.extra_vision = fclamp(0.4,buffs.extra_vision,1);
+        } else if (slot_petal_id == PetalID::kEntennae) {
+            buffs.extra_vision = fclamp(0.25,buffs.extra_vision,1);
         } else if (slot_petal_id == PetalID::kObserver) {
             buffs.extra_vision = 0.75;
         } else if (slot_petal_id == PetalID::kThirdEye) {
@@ -50,6 +52,8 @@ static struct PlayerBuffs _get_petal_passive_buffs(Simulation *sim, Entity &play
             buffs.heal += petal_data.attributes.constant_heal / TPS;
         if (slot_petal_id == PetalID::kFaster) 
             buffs.extra_rot += 1.0;
+        else if (slot_petal_id == PetalID::kTriFaster) 
+            buffs.extra_rot += 2.5;
         else if (slot_petal_id == PetalID::kCactus) 
             buffs.extra_health += 20;
         else if (slot_petal_id == PetalID::kTricac) 

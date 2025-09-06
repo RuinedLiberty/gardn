@@ -154,10 +154,12 @@ void draw_static_mob(MobID::T mob_id, Renderer &ctx, MobRenderAttributes attr) {
             break;
         case MobID::kLadybug:
         case MobID::kMassiveLadybug:
+        case MobID::kManbug:
+        case MobID::kFatDarkLadybug:
         case MobID::kDarkLadybug:
         case MobID::kShinyLadybug:
             ctx.scale(radius / 30);
-            if (mob_id == MobID::kDarkLadybug) SET_BASE_COLOR(0xff962921)
+            if (mob_id == MobID::kDarkLadybug || mob_id == MobID::kManbug || mob_id == MobID::kFatDarkLadybug) SET_BASE_COLOR(0xff962921)
             else if (mob_id == MobID::kShinyLadybug) SET_BASE_COLOR(0xffebeb34)
             else SET_BASE_COLOR(0xffeb4034)
             ctx.set_fill(0xff111111);
@@ -180,7 +182,7 @@ void draw_static_mob(MobID::T mob_id, Renderer &ctx, MobRenderAttributes attr) {
             {
                 RenderContext context(&ctx);
                 ctx.clip();
-                if (mob_id == MobID::kDarkLadybug) ctx.set_fill(Renderer::HSV(base_color, 1.2));
+                if (mob_id == MobID::kDarkLadybug || mob_id == MobID::kManbug || mob_id == MobID::kFatDarkLadybug) ctx.set_fill(Renderer::HSV(base_color, 1.2));
                 else ctx.set_fill(0xff111111);
                 SeedGenerator gen(seed * 374572 + 46237);
                 uint32_t ct = 1 + gen.next() * 7;

@@ -32,6 +32,36 @@ static Element *make_entries(std::initializer_list<std::string const> contents) 
 
 static Element *make_changelog_contents() {
     Element *elt = new Ui::VContainer({
+        make_date("September 6th 2025"),
+        make_entries({
+            "More bufixes",
+            "The event is now over, thank you to everybody who played!",
+            "Changed UI slightly"
+        }),
+        make_divider(),
+        make_date("August 30th 2025"),
+        make_entries({
+            "Added mobile touch controls",
+            "Neutral mobs will now aggro the leader if above level 50",
+            "More bugfixes",
+            "Game is in an event GameMode! All drops are 5X as common!"
+        }),
+        make_divider(),
+        make_date("August 28th 2025"),
+        make_entries({
+            "Made some UI improvements",
+            "Added a petal tracker for Legendary, Mythic, and Unique petals in our Discord",
+            "Disconnect reasons now display on your Client"
+        }),
+        make_divider(),
+        make_date("August 25th 2025"),
+        make_entries({
+            "Made Anti-Chinese propaganda bannable",
+            "Added a two new mobs. You can find them in the new !!! zone",
+            "Some QOL and balance changes",
+            "Created an official Discord server. You can join it at discord.gg/florr"
+        }),
+        make_divider(),
         make_date("August 30th 2025"),
         make_entries({
             "Added mobile touch controls",

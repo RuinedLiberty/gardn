@@ -74,7 +74,7 @@ Element *Ui::make_death_main_screen() {
             if (!Game::simulation.ent_exists(Game::camera_id))
                 return std::string{""};
             if (Game::simulation.get_ent(Game::camera_id).get_killed_by() == "") 
-                return std::string{"a mysterious entity"};
+                return std::string{"A Mysterious Entity"};
             return Game::simulation.get_ent(Game::camera_id).get_killed_by();
         }),
         new Ui::DeadFlowerIcon(125),
