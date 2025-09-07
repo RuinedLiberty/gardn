@@ -2,7 +2,13 @@
 
 #include <Client/StaticData.hh>
 
+#include <Helpers/Bits.hh>
+#include <Helpers/Math.hh>
+
 #include <cmath>
+
+#define SET_BASE_COLOR(set_color) { if (!BitMath::at(flags, 0)) base_color = set_color; else { base_color = FLOWER_COLORS[attr.color]; } }
+
 
 void draw_static_petal_single(PetalID::T id, Renderer &ctx) {
     float r = PETAL_DATA[id].radius;
@@ -30,6 +36,29 @@ void draw_static_petal_single(PetalID::T id, Renderer &ctx) {
             ctx.fill();
             ctx.stroke();
             break;
+        case PetalID::kSoil: {
+    uint32_t base_color = 0xff695118;  // your new color
+    SeedGenerator gen(std::floor(r) * 1951264 + 295726);
+    ctx.set_fill(base_color);
+    ctx.set_stroke(Renderer::HSV(base_color, 0.8));
+    ctx.set_line_width(5);
+    ctx.round_line_cap();
+    ctx.round_line_join();
+    ctx.begin_path();
+    float deflection = r * 0.1;
+    ctx.move_to(r + gen.binext() * deflection, gen.binext() * deflection);
+    uint32_t sides = 7 + r / 10;
+    for (uint32_t i = 1; i < sides; ++i) {
+        float angle = 2 * M_PI * i / sides;
+        ctx.line_to(cosf(angle) * r + gen.binext() * deflection,
+                    sinf(angle) * r + gen.binext() * deflection);
+    }
+    ctx.close_path();
+    ctx.fill();
+    ctx.stroke();
+    break;
+}
+
         case PetalID::kHeavy:
             ctx.set_fill(0xffaaaaaa);
             ctx.set_stroke(0xff888888);
@@ -134,6 +163,28 @@ void draw_static_petal_single(PetalID::T id, Renderer &ctx) {
             ctx.fill();
             ctx.stroke();
             break;
+//         case PetalID::kWax: {
+//        uint32_t base_color = 0xfff7ce2f;   
+//     SeedGenerator gen(std::floor(r) * 1951264 + 295726);
+//     ctx.set_fill(base_color);
+//     ctx.set_stroke(Renderer::HSV(base_color, 0.8));
+//     ctx.set_line_width(10);
+//     ctx.round_line_cap();
+//     ctx.round_line_join();
+//     ctx.begin_path();
+//     float deflection = r * 0.1;
+//     ctx.move_to(r + gen.binext() * deflection, gen.binext() * deflection);
+//     uint32_t sides = 6;
+//     for (uint32_t i = 1; i < sides; ++i) {
+//         float angle = 2 * M_PI * i / sides;
+//         ctx.line_to(cosf(angle) * r + gen.binext() * deflection,
+//                     sinf(angle) * r + gen.binext() * deflection);
+//     }
+//     ctx.close_path();
+//     ctx.fill();
+//     ctx.stroke();
+//     break;
+// }
         case PetalID::kBubble:
             ctx.begin_path();
             ctx.arc(0,0,r);

@@ -71,9 +71,9 @@ void tick_petal_behavior(Simulation *sim, Entity &petal) {
                         Vector delta(petal.get_x() - player.get_x(), petal.get_y() - player.get_y());
                         petal.friction = DEFAULT_FRICTION;
                         float angle = delta.angle();
-                        if (petal.get_petal_id() == PetalID::kTriweb) angle += frand() - 0.5;
+                        if (petal.get_petal_id() == PetalID::kTriweb) angle += frand() - 0.4;
                         petal.acceleration.unit_normal(angle).set_magnitude(30 * PLAYER_ACCELERATION);
-                        entity_set_despawn_tick(petal, 0.6 * TPS);
+                        entity_set_despawn_tick(petal, 0.8 * TPS);
                     } else if (BitMath::at(player.input, InputFlags::kDefending))
                         entity_set_despawn_tick(petal, 0.6 * TPS);
                     break;
@@ -81,7 +81,7 @@ void tick_petal_behavior(Simulation *sim, Entity &petal) {
                 case PetalID::kBubble:
                     if (BitMath::at(player.input, InputFlags::kDefending)) {
                         Vector v(player.get_x() - petal.get_x(), player.get_y() - petal.get_y());
-                        v.set_magnitude(PLAYER_ACCELERATION * 20);
+                        v.set_magnitude(PLAYER_ACCELERATION * 18);
                         player.velocity += v;
                         sim->request_delete(petal.id);
                     }
@@ -92,6 +92,15 @@ void tick_petal_behavior(Simulation *sim, Entity &petal) {
                         entity_set_despawn_tick(petal, 4.0 * TPS);
                     }
                     break;
+                // case PetalID::kWax:
+                //     if (BitMath::at(player.input, InputFlags::kAttacking) || BitMath::at(player.input, InputFlags::kDefending)) {
+                //         petal.friction = 1;
+                //         entity_set_despawn_tick(petal, 15.0 * TPS);
+                //     } else {
+                //         petal.friction = 1;
+                //         entity_set_despawn_tick(petal, 15.0 * TPS);
+                //     }
+                //     break;
                 case PetalID::kFatPeas:
                 case PetalID::kPeas:
                 case PetalID::kPoisonPeas:

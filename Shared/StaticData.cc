@@ -167,11 +167,11 @@ std::array<struct PetalData, PetalID::kNumPetals> const PETAL_DATA = {{
         .health = 1.0,
         .damage = 0.0,
         .radius = 12.0,
-        .reload = 2.0,
+        .reload = 1.9,
         .count = 1,
         .rarity = RarityID::kRare,
         .attributes = {
-            .secondary_reload = 0.5,
+            .secondary_reload = 0.4,
             .defend_only = 1,
         }
     },
@@ -196,7 +196,7 @@ std::array<struct PetalData, PetalID::kNumPetals> const PETAL_DATA = {{
         .count = 3,
         .rarity = RarityID::kLegendary,
         .attributes = {
-            .clump_radius = 11
+            .clump_radius = 6
         }
     },
     {
@@ -528,7 +528,9 @@ std::array<struct PetalData, PetalID::kNumPetals> const PETAL_DATA = {{
         .reload = 15.0,
         .count = 1,
         .rarity = RarityID::kEpic,
-        .attributes = {}
+        .attributes = {
+            .mass = 5
+        }
     },
     {
         .name = "Third Eye",
@@ -676,9 +678,9 @@ std::array<struct PetalData, PetalID::kNumPetals> const PETAL_DATA = {{
         .name = "Rice",
         .description = "Spawns instantly, but not very strong",
         .health = 1.0,
-        .damage = 4.0,
+        .damage = 5.5,
         .radius = 13.0,
-        .reload = 0.05,
+        .reload = 0.1,
         .count = 1,
         .rarity = RarityID::kEpic,
         .attributes = {
@@ -722,9 +724,37 @@ std::array<struct PetalData, PetalID::kNumPetals> const PETAL_DATA = {{
         .count = 1,
         .rarity = RarityID::kEpic,
         .attributes = {
-            .icon_angle = 0.5
+            .mass = 4,
+            .icon_angle = 0.5,
         }
     },
+    {
+        .name = "Soil",
+        .description = "The bigger, the better! Wait... Are you sure about this?",
+        .health = 10.0,
+        .damage = 2.5,
+        .radius = 12.0,
+        .reload = 1.5,
+        .count = 1,
+        .rarity = RarityID::kEpic,
+        .attributes = {}
+    },
+    // {
+    //     .name = "Wax",
+    //     .description = "This thing is so sticky that nothing gets in it's way",
+    //     .health = 300.0,
+    //     .damage = 0.0,
+    //     .radius = 80.0,
+    //     .reload = 15,
+    //     .count = 1,
+    //     .rarity = RarityID::kEpic,
+    //     .attributes = {
+    //         .secondary_reload = 0.01,
+    //         .mass = 50,
+    //         .icon_angle = 0.1,
+    //         .rotation_style = PetalAttributes::kFollowRot,
+    //     }
+    // },
 }};
 
 std::array<struct MobData, MobID::kNumMobs> const MOB_DATA = {{
@@ -776,7 +806,7 @@ std::array<struct MobData, MobID::kNumMobs> const MOB_DATA = {{
         .radius = {20.0},
         .xp = 4,
         .drops = {
-            PetalID::kLight, PetalID::kStinger, PetalID::kTwin, PetalID::kWing, PetalID::kTringer
+            PetalID::kLight, PetalID::kStinger, PetalID::kTwin, PetalID::kWing, PetalID::kTriplet//, PetalID::kWax
         },
         .attributes = {}
     },
@@ -1044,7 +1074,7 @@ std::array<struct MobData, MobID::kNumMobs> const MOB_DATA = {{
         .radius = {45.0},
         .xp = 25,
         .drops = {
-            PetalID::kIris, PetalID::kWing, PetalID::kAntEgg, PetalID::kTriplet
+            PetalID::kIris, PetalID::kWing, PetalID::kAntEgg, PetalID::kTriplet, PetalID::kSoil,
         },
         .attributes = {
             .stationary = 1 
@@ -1110,7 +1140,7 @@ std::array<struct MobData, MobID::kNumMobs> const MOB_DATA = {{
 
 std::array<StaticArray<float, MAX_DROPS_PER_MOB>, MobID::kNumMobs> const MOB_DROP_CHANCES = [](){
     std::array<StaticArray<float, MAX_DROPS_PER_MOB>, MobID::kNumMobs> ret;
-    double const RARITY_MULT[RarityID::kNumRarities] = {50000,15000,3000,400,10,1,1}; // these are custom drop chances, not linear like before
+    double const RARITY_MULT[RarityID::kNumRarities] = {50000,50000,50000,50000,50000,50000,1}; // these are custom drop chances, not linear like before
     double MOB_SPAWN_RATES[MobID::kNumMobs] = {0};
     double PETAL_AGGREGATE_DROPS[PetalID::kNumPetals] = {0};
     for (struct ZoneDefinition const &zone : MAP_DATA) {

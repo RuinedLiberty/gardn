@@ -5,3 +5,4 @@ node_modules/
 .vscode/
 gardn-client.js
 gardn-client.wasm
+discord-logger.js

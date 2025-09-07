@@ -78,6 +78,8 @@ namespace PetalID {
         kBone,
         kYucca,
         kCorn,
+        kSoil,
+        //kWax,
         kNumPetals
     };
 };

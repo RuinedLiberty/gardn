@@ -58,14 +58,17 @@ static struct PlayerBuffs _get_petal_passive_buffs(Simulation *sim, Entity &play
             buffs.extra_health += 20;
         else if (slot_petal_id == PetalID::kTricac) 
             buffs.extra_health += 60;
-        else if (slot_petal_id == PetalID::kPoisonCactus) {
+        else if (slot_petal_id == PetalID::kSoil) {
+            buffs.extra_health += 35;
+            player.set_radius(BASE_FLOWER_RADIUS * 1.20);
+        } else if (slot_petal_id == PetalID::kPoisonCactus) {
             buffs.extra_health += 20;
             buffs.is_poisonous = 1;
         } else if (slot_petal_id == PetalID::kSalt) {
             player.damage_reflection = 0.25;
         } else if (slot_petal_id == PetalID::kLotus) {
             player.poison_armor = 3.5f / TPS;
-        }
+        } 
     }
     return buffs;
 }

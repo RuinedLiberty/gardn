@@ -14,7 +14,7 @@
 using namespace Ui;
 
 GalleryMob::GalleryMob(MobID::T id, float w) : 
-    Element(w,w,{ .fill=0xffa8d4ed, .stroke_hsv=1, .line_width=3, .round_radius=6, .v_justify=Style::Top }), id(id) {}
+    Element(w,w,{ .fill=0xff5a9fdb, .stroke_hsv=1, .line_width=3, .round_radius=6, .v_justify=Style::Top }), id(id) {}
 
 void GalleryMob::on_render(Renderer &ctx) {
     Element::on_render(ctx);
