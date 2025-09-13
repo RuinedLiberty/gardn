@@ -122,7 +122,8 @@ void tick_player_behavior(Simulation *sim, Entity &player) {
             slot.update_id(sim, player.get_loadout_ids(i));
         PetalID::T slot_petal_id = slot.get_petal_id();
         struct PetalData const &petal_data = PETAL_DATA[slot_petal_id];
-        DEBUG_ONLY(assert(petal_data.count <= MAX_PETALS_IN_CLUMP);)
+        // Use clamped size for safety (petal_data.count may be very large)
+        DEBUG_ONLY(assert(slot.size() <= MAX_PETALS_IN_CLUMP);)
 
         if (slot_petal_id == PetalID::kNone || petal_data.count == 0)
             continue;
@@ -172,7 +173,8 @@ void tick_player_behavior(Simulation *sim, Entity &player) {
                     wanting *= range;
                     if (petal_data.attributes.clump_radius > 0) {
                         Vector secondary;
-                        secondary.unit_normal(2 * M_PI * j / petal_data.count + player.heading_angle * 0.2)
+                        // Space based on the actually realized petal count (slot.size()), not the raw data count
+                        secondary.unit_normal(2 * M_PI * j / std::max<uint32_t>(1, slot.size()) + player.heading_angle * 0.2)
                         .set_magnitude(petal_data.attributes.clump_radius);
                         wanting += secondary;
                     }

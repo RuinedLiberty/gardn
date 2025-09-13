@@ -62,5 +62,8 @@ void LoadoutSlot::force_reload() {
 }
 
 uint32_t LoadoutSlot::size() const {
-    return PETAL_DATA[id].count;
+    // Clamp to backing array capacity to avoid overflow even if data.count is huge
+    uint32_t c = PETAL_DATA[id].count;
+    if (c > MAX_PETALS_IN_CLUMP) c = MAX_PETALS_IN_CLUMP;
+    return c;
 }
