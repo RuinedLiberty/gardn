@@ -6,3 +6,7 @@ node_modules/
 gardn-client.js
 gardn-client.wasm
 discord-logger.js
+package.json
+package-lock.json
+Scripts/
+

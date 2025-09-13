@@ -72,8 +72,8 @@ static Element *make_mob_card(MobID::T id) {
             10, 10
         ),
         new Ui::Element(0,10),
-        DEBUG_ONLY(new Ui::StaticText(14, "Health: " + MOB_DATA[id].health.to_string(), { .fill = 0xffffff90, .h_justify = Style::Left }),)
-        DEBUG_ONLY(new Ui::StaticText(14, "Damage: " + format_score(MOB_DATA[id].damage), { .fill = 0xffffff90, .h_justify = Style::Left }),)
+        new Ui::StaticText(14, "Health: " + MOB_DATA[id].health.to_string(), { .fill = 0xffffff90, .h_justify = Style::Left }),
+        new Ui::StaticText(14, "Damage: " + format_score(MOB_DATA[id].damage), { .fill = 0xffffff90, .h_justify = Style::Left }),
         DEBUG_ONLY(new Ui::StaticText(14, "Radius: " + MOB_DATA[id].radius.to_string(), { .fill = 0xffffff90, .h_justify = Style::Left }),)
         new Ui::Element(0,10),
         make_mob_drops(id)
