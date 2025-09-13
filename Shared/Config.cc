@@ -1,9 +1,10 @@
 #include <Shared/Config.hh>
 
-extern const uint64_t VERSION_HASH = 19335484321324ull;
+extern const uint64_t VERSION_HASH = 19335884321324ull;
 
-extern const uint32_t SERVER_PORT = 9999;
+extern const uint32_t SERVER_PORT = 9009;
 extern const uint32_t MAX_NAME_LENGTH = 16;
 
+// extern std::string const WS_URL = "wss://gardn.pro/ws/";
 //your ws host url may not follow this format, change it to fit your needs
 extern std::string const WS_URL = "ws://localhost:"+std::to_string(SERVER_PORT);

@@ -540,7 +540,7 @@ std::array<struct PetalData, PetalID::kNumPetals> const PETAL_DATA = {{
         .radius = 20.0,
         .reload = 0.0,
         .count = 0,
-        .rarity = RarityID::kMythic,
+        .rarity = RarityID::kLegendary,
         .attributes = { 
             .equipment = EquipmentFlags::kThirdEye
         }
@@ -553,7 +553,7 @@ std::array<struct PetalData, PetalID::kNumPetals> const PETAL_DATA = {{
         .radius = 12.5,
         .reload = 0.0,
         .count = 0,
-        .rarity = RarityID::kMythic,
+        .rarity = RarityID::kUnique,
         .attributes = { 
             .equipment = EquipmentFlags::kObserver
         }
@@ -587,8 +587,8 @@ std::array<struct PetalData, PetalID::kNumPetals> const PETAL_DATA = {{
     },
     {
         .name = "Basic",
-        .description = "Something incredibly rare and useless",
-        .health = 10.0,
+        .description = "Something incredibly rare and useful",
+        .health = 50.0,
         .damage = 10.0,
         .radius = 10.0,
         .reload = 2.5,
@@ -599,25 +599,29 @@ std::array<struct PetalData, PetalID::kNumPetals> const PETAL_DATA = {{
     {
         .name = "Square",
         .description = "This shape... it looks familiar...",
-        .health = 10.0,
-        .damage = 10.0,
+        .health = 100.0,
+        .damage = 0.0,
         .radius = 15.0,
         .reload = 2.5,
         .count = 1,
         .rarity = RarityID::kUnique,
-        .attributes = {
+        .attributes = { 
+            .secondary_reload = 30.0,
+            .defend_only = 1,
+            .rotation_style = PetalAttributes::kNoRot,
+            .spawns = MobID::kSquare,
             .icon_angle = M_PI / 4 + 1
         }
     },
     {
         .name = "Moon",
         .description = "Where did this come from?",
-        .health = 1000.0,
-        .damage = 1.0,
-        .radius = 80.0,
+        .health = 600.0,
+        .damage = 0.1,
+        .radius = 50.0,
         .reload = 10.0,
         .count = 1,
-        .rarity = RarityID::kMythic,
+        .rarity = RarityID::kLegendary,
         .attributes = {
             .secondary_reload = 0.5,
             .mass = 200
@@ -662,7 +666,7 @@ std::array<struct PetalData, PetalID::kNumPetals> const PETAL_DATA = {{
     },
     {
         .name = "Yggdrasil",
-        .description = "Unfortunately, its powers are useless here",
+        .description = "Something incredibly rare and incredibly useless",
         .health = 1.0,
         .damage = 1.0,
         .radius = 12.0,
@@ -913,7 +917,7 @@ std::array<struct MobData, MobID::kNumMobs> const MOB_DATA = {{
         .rarity = RarityID::kUnusual,
         .health = {40.0},
         .damage = 40.0,
-        .radius = {40.0},
+        .radius = {40.0, 50.0},
         .xp = 12,
         .drops = {
             PetalID::kDandelion, PetalID::kMissile, PetalID::kWing, PetalID::kEntennae, PetalID::kAntennae
@@ -943,7 +947,7 @@ std::array<struct MobData, MobID::kNumMobs> const MOB_DATA = {{
         .rarity = RarityID::kCommon,
         .health = {5.0, 15.0},
         .damage = 10.0,
-        .radius = {10.0, 25.0},
+        .radius = {25.0, 30.0},
         .xp = 1,
         .drops = {
             PetalID::kHeavy, PetalID::kLight, PetalID::kRock, PetalID::kHeaviest
@@ -1110,7 +1114,7 @@ std::array<struct MobData, MobID::kNumMobs> const MOB_DATA = {{
     },
     {
         .name = "Square",
-        .description = "???",
+        .description = "This shape... It looks familiar...",
         .rarity = RarityID::kUnique,
         .health = {20.0},
         .damage = 10.0,
@@ -1136,11 +1140,24 @@ std::array<struct MobData, MobID::kNumMobs> const MOB_DATA = {{
         },
         .attributes = {}
     },
+    {
+        .name = "Moraine",
+        .description = "Older than time itself",
+        .rarity = RarityID::kLegendary,
+        .health = {5000.0},
+        .damage = 3.0,
+        .radius = {95.0},
+        .xp = 250,
+        .drops = {
+            PetalID::kRock, PetalID::kHeaviest, PetalID::kMoon
+        },
+        .attributes = {}
+    },
 }};
 
 std::array<StaticArray<float, MAX_DROPS_PER_MOB>, MobID::kNumMobs> const MOB_DROP_CHANCES = [](){
     std::array<StaticArray<float, MAX_DROPS_PER_MOB>, MobID::kNumMobs> ret;
-    double const RARITY_MULT[RarityID::kNumRarities] = {50000,50000,50000,50000,50000,50000,1}; // these are custom drop chances, not linear like before
+    double const RARITY_MULT[RarityID::kNumRarities] = {50000,15000,2500,100,10,2.5,1}; 
     double MOB_SPAWN_RATES[MobID::kNumMobs] = {0};
     double PETAL_AGGREGATE_DROPS[PetalID::kNumPetals] = {0};
     for (struct ZoneDefinition const &zone : MAP_DATA) {

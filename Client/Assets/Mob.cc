@@ -186,6 +186,7 @@ void draw_static_mob(MobID::T mob_id, Renderer &ctx, MobRenderAttributes attr) {
                 else ctx.set_fill(0xff111111);
                 SeedGenerator gen(seed * 374572 + 46237);
                 uint32_t ct = 1 + gen.next() * 7;
+                if (ct < 2) ct = 2;
                 for (uint32_t i = 0; i < ct; ++i) {
                     ctx.begin_path();
                     ctx.arc(gen.binext()*30,gen.binext()*30,4+gen.next()*5);
@@ -236,7 +237,7 @@ void draw_static_mob(MobID::T mob_id, Renderer &ctx, MobRenderAttributes attr) {
             ctx.translate(35,0);
             {
                 RenderContext context(&ctx);
-                ctx.rotate(-0.1 * animation_value);
+                ctx.rotate(-0.15 * animation_value);
                 ctx.move_to(-10,15);
                 ctx.qcurve_to(15,30,35,15);
                 ctx.qcurve_to(15,20,-10,5);
@@ -246,7 +247,7 @@ void draw_static_mob(MobID::T mob_id, Renderer &ctx, MobRenderAttributes attr) {
             }
             {
                 RenderContext context(&ctx);
-                ctx.rotate(0.1 * animation_value);
+                ctx.rotate(0.15 * animation_value);
                 ctx.move_to(-10,-15);
                 ctx.qcurve_to(15,-30,35,-15);
                 ctx.qcurve_to(15,-20,-10,-5);
@@ -372,18 +373,19 @@ void draw_static_mob(MobID::T mob_id, Renderer &ctx, MobRenderAttributes attr) {
             break;
         }
         case MobID::kRock:
+        case MobID::kMoraine:
         case MobID::kBoulder: {
             SET_BASE_COLOR(0xff777777)
             SeedGenerator gen(std::floor(radius) * 1957264 + 295726);
             ctx.set_fill(base_color);
             ctx.set_stroke(Renderer::HSV(base_color, 0.8));
-            ctx.set_line_width(5);
+            ctx.set_line_width(6);
             ctx.round_line_cap();
             ctx.round_line_join();
             ctx.begin_path();
             float deflection = radius * 0.1;
             ctx.move_to(radius + gen.binext() * deflection,gen.binext() * deflection);
-            uint32_t sides = 4 + radius / 10;
+            uint32_t sides = 5 + radius / 10;
             for (uint32_t i = 1; i < sides; ++i) {
                 float angle = 2 * M_PI * i / sides;
                 ctx.line_to(cosf(angle) * radius + gen.binext() * deflection, sinf(angle) * radius + gen.binext() * deflection);

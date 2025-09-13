@@ -437,6 +437,13 @@ void tick_ai_behavior(Simulation *sim, Entity &ent) {
             }
             tick_default_aggro(sim, ent, 0.95);
             break;
+case MobID::kMoraine:
+    if (ent.lifetime % (1 * TPS) == 0) {
+        Entity &spawned = alloc_mob(sim, MobID::kBoulder, ent.get_x(), ent.get_y(), ent.get_team());
+        entity_set_despawn_tick(spawned, 15 * TPS);
+        spawned.set_parent(ent.get_parent());
+    }
+    break;
         case MobID::kFatDarkLadybug:
             if (ent.lifetime % (4 * TPS) == 0) {
                 Vector behind;
@@ -451,7 +458,6 @@ void tick_ai_behavior(Simulation *sim, Entity &ent) {
         case MobID::kHornet:
             tick_hornet_aggro(sim, ent);
             break;
-        case MobID::kBoulder:
         case MobID::kRock:
         case MobID::kCactus:
         case MobID::kSquare:

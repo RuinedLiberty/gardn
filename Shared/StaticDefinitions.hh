@@ -109,10 +109,12 @@ namespace MobID {
         kScorpion,
         kSpider,
         kAntHole,
+        //kAHole,
         kQueenAnt,
         kShinyLadybug,
         kSquare,
         kDigger,
+        kMoraine,
         kNumMobs
     };
 };
