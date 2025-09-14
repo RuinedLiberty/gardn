@@ -11,3 +11,4 @@ package-lock.json
 Scripts/
 /index.html
 /gardn.bat
+.continue/

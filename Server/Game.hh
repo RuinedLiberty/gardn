@@ -5,6 +5,7 @@
 #include <Shared/Simulation.hh>
 
 #include <set>
+#include <cstdint>
 
 class Client;
 

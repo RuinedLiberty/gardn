@@ -128,7 +128,9 @@ SINGLE(Name, nametag_visible, uint8_t)
     SINGLE(deletion_tick, uint8_t, =0) \
     SINGLE(despawn_tick, game_tick_t, =0) \
     SINGLE(secondary_reload, game_tick_t, =0) \
-    SINGLE(deleted_petals, circ_arr_t, ={})
+    SINGLE(deleted_petals, circ_arr_t, ={}) \
+    SINGLE(is_bot, uint8_t, =0) \
+    SINGLE(respawn_cooldown, game_tick_t, =0)
 #else
 #define PER_EXTRA_FIELD \
     SINGLE(last_damaged_time, double, =0) \

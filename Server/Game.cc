@@ -3,6 +3,7 @@
 #include <Server/Client.hh>
 #include <Server/PetalTracker.hh>
 #include <Server/Server.hh>
+#include <Server/Spawn.hh>
 
 #include <Shared/Binary.hh>
 #include <Shared/Entity.hh>
@@ -65,6 +66,27 @@ void GameInstance::init() {
     team_manager.add_team(ColorID::kBlue);
     team_manager.add_team(ColorID::kRed);
     #endif
+
+    // Spawn AI players (bots)
+    const uint32_t bot_count = 6; // tune based on capacity
+    for (uint32_t i = 0; i < bot_count; ++i) {
+        Entity &cam = simulation.alloc_ent();
+        cam.add_component(kCamera);
+        cam.add_component(kRelations);
+        cam.set_team(cam.id);
+        cam.set_color(ColorID::kGray);
+        cam.set_fov(BASE_FOV);
+        cam.set_respawn_level(1);
+        cam.is_bot = 1;
+        for (uint32_t s = 0; s < loadout_slots_at_level(cam.get_respawn_level()); ++s) {
+            cam.set_inventory(s, PetalID::kBasic);
+            PetalTracker::add_petal(&simulation, cam.get_inventory(s));
+        }
+        Entity &player = alloc_player(&simulation, cam.get_team());
+        player.is_bot = 1;
+        player.set_name("Bot");
+        player_spawn(&simulation, cam, player);
+    }
 }
 
 void GameInstance::tick() {

@@ -1,4 +1,5 @@
 #include <Server/Process.hh>
+#include <Server/Spawn.hh>
 
 #include <Shared/Entity.hh>
 #include <Shared/Map.hh>
@@ -6,6 +7,19 @@
 #include <Shared/StaticData.hh>
 
 void tick_camera_behavior(Simulation *sim, Entity &ent) {
+    // Bot camera auto-respawn: if this camera is a bot's and its player is dead, respawn after a short delay.
+    if (ent.is_bot && !sim->ent_alive(ent.get_player())) {
+        if (ent.respawn_cooldown == 0) {
+            Entity &player = alloc_player(sim, ent.get_team());
+            player.is_bot = 1;
+            player.set_name("Bot");
+            player_spawn(sim, ent, player);
+            ent.respawn_cooldown = TPS / 2; // small cooldown to avoid instant loops
+        } else {
+            --ent.respawn_cooldown;
+        }
+    }
+
     if (sim->ent_exists(ent.get_player())) {
         Entity &player = sim->get_ent(ent.get_player());
         ent.set_camera_x(player.get_x());
