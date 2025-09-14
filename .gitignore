@@ -9,4 +9,5 @@ discord-logger.js
 package.json
 package-lock.json
 Scripts/
-
+/index.html
+/gardn.bat
