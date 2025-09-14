@@ -279,7 +279,7 @@ void draw_static_petal_single(PetalID::T id, Renderer &ctx) {
             ctx.stroke();
             break;
         }
-        case PetalID::kEntennae:
+        //case PetalID::kEntennae:
         case PetalID::kAntennae: {
             ctx.round_line_cap();
             ctx.round_line_join();
