@@ -493,19 +493,19 @@ std::array<struct PetalData, PetalID::kNumPetals> const PETAL_DATA = {{
             .equipment = EquipmentFlags::kAntennae 
         }
     },
-    {
-        .name = "Antennae",
-        .description = "Allows your flower to sense foes from farther away",
-        .health = 0.0,
-        .damage = 0.0,
-        .radius = 12.5,
-        .reload = 0.0,
-        .count = 0,
-        .rarity = RarityID::kEpic,
-        .attributes = { 
-            .equipment = EquipmentFlags::kAntennae 
-        }
-    },
+    // {
+    //     .name = "Antennae",
+    //     .description = "Allows your flower to sense foes from farther away",
+    //     .health = 0.0,
+    //     .damage = 0.0,
+    //     .radius = 12.5,
+    //     .reload = 0.0,
+    //     .count = 0,
+    //     .rarity = RarityID::kEpic,
+    //     .attributes = { 
+    //         .equipment = EquipmentFlags::kAntennae 
+    //     }
+    // },
     {
         .name = "Cactus",
         .description = "Not very strong, but somehow increases your maximum health",
@@ -920,7 +920,7 @@ std::array<struct MobData, MobID::kNumMobs> const MOB_DATA = {{
         .radius = {40.0, 50.0},
         .xp = 12,
         .drops = {
-            PetalID::kDandelion, PetalID::kMissile, PetalID::kWing, PetalID::kEntennae, PetalID::kAntennae
+            PetalID::kDandelion, PetalID::kMissile, PetalID::kWing, /*PetalID::kEntennae,*/ PetalID::kAntennae
         },
         .attributes = {
             .aggro_radius = 600

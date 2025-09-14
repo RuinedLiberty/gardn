@@ -60,7 +60,7 @@ namespace PetalID {
         kTringer,
         kTriweb,
         kAntennae,
-        kEntennae,
+        // kEntennae,
         kTricac,
         kHeaviest,
         kThirdEye,
