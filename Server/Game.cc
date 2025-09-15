@@ -68,7 +68,7 @@ void GameInstance::init() {
     #endif
 
     // Spawn AI players (bots)
-    const uint32_t bot_count = 6; // tune based on capacity
+    const uint32_t bot_count = 20; // tune based on capacity
     for (uint32_t i = 0; i < bot_count; ++i) {
         Entity &cam = simulation.alloc_ent();
         cam.add_component(kCamera);

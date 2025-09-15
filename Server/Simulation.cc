@@ -46,9 +46,8 @@ void Simulation::on_tick() {
             BitMath::set(ent.flags, EntityFlags::kIsCulled);
     });
     for_each<kCamera>(tick_culling_behavior);
-    // Set bot inputs first
+    // Set AI inputs before normal player processing
     for_each<kFlower>(tick_bot_player_behavior);
-    // Then run normal player behavior which consumes input
     for_each<kFlower>(tick_player_behavior);
     for_each<kMob>(tick_ai_behavior);
     for_each<kPetal>(tick_petal_behavior);

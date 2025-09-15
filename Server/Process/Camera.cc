@@ -19,7 +19,6 @@ void tick_camera_behavior(Simulation *sim, Entity &ent) {
             --ent.respawn_cooldown;
         }
     }
-
     if (sim->ent_exists(ent.get_player())) {
         Entity &player = sim->get_ent(ent.get_player());
         ent.set_camera_x(player.get_x());

@@ -21,7 +21,11 @@ set(SOURCES
     Process/Petal.cc
     Process/Score.cc
     Process/Segment.cc
-    Process/Bot.cc
+    # Bot AI split under Process/Bot/
+    Process/Bot/Behavior.cc
+    Process/Bot/Inventory.cc
+    Process/Bot/Targeting.cc
+    Process/Bot/Movement.cc
     Client.cc
     Game.cc
     Main.cc

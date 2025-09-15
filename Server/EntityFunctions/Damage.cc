@@ -86,6 +86,33 @@ void inflict_damage(Simulation *sim, EntityID const atk_id, EntityID const def_i
     }
     defender.last_damaged_by = attacker.base_entity;
 
+    // Record recent damage (server-only) for AI retaliation priority
+    {
+        EntityID source = attacker.base_entity;
+        game_tick_t now = defender.lifetime;
+        // accumulate into same-attacker slot if present, else pick an empty/oldest slot
+        uint32_t best_slot = 0;
+        float oldest = 0.0f;
+        uint8_t found = 0;
+        for (uint32_t i = 0; i < 8; ++i) {
+            auto &rd = defender.recent_damage[i];
+            if (rd.attacker == source) {
+                rd.amount += damage_dealt;
+                rd.tick = now;
+                found = 1;
+                break;
+            }
+            float age = (float)(now - rd.tick);
+            if (i == 0 || age > oldest) { oldest = age; best_slot = i; }
+        }
+        if (!found) {
+            auto &rd = defender.recent_damage[best_slot];
+            rd.attacker = source;
+            rd.amount = damage_dealt;
+            rd.tick = now;
+        }
+    }
+
     if (type == DamageType::kContact && defender.poison_ticks < attacker.poison_damage.time * TPS) {
         defender.poison_ticks = attacker.poison_damage.time * TPS;
         defender.poison_inflicted = attacker.poison_damage.damage / TPS;
