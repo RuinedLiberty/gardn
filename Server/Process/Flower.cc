@@ -231,17 +231,22 @@ void tick_player_behavior(Simulation *sim, Entity &player) {
         player.set_face_flags(player.get_face_flags() | (1 << FaceFlags::kPoisoned));
     if (player.dandy_ticks > 0)
         player.set_face_flags(player.get_face_flags() | (1 << FaceFlags::kDandelioned));
+
+    // ALWAYS rotate petals. Never leave heading_angle unchanged.
+    const float base_rot = (BASE_PETAL_ROTATION_SPEED + buffs.extra_rot) / TPS;
     if (buffs.yinyang_count != MAX_SLOT_COUNT) {
         switch (buffs.yinyang_count % 3) {
             case 0:
-                player.heading_angle += (BASE_PETAL_ROTATION_SPEED + buffs.extra_rot) / TPS;
+                player.heading_angle += base_rot;            // clockwise
                 break;
             case 1:
-                player.heading_angle -= (BASE_PETAL_ROTATION_SPEED + buffs.extra_rot) / TPS;
+                player.heading_angle -= base_rot;            // counter-clockwise
                 break;
-            default:
+            case 2:
+                player.heading_angle += 0.5f * base_rot;     // slower, but always moving
                 break;
         }
-    } else 
-        player.heading_angle += 10 * (BASE_PETAL_ROTATION_SPEED + buffs.extra_rot) / TPS;
+    } else {
+        player.heading_angle += 10.0f * base_rot;            // special all-YinYang behavior
+    }
 }

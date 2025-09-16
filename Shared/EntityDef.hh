@@ -102,11 +102,11 @@ SINGLE(Score, score, uint32_t)
 
 #define FIELDS_Name \
 SINGLE(Name, name, std::string) \
-SINGLE(Name, nametag_visible, uint8_t)
+SINGLE(Name, nametag_visible, uint8_t) \
+MULTIPLE(Name, info, std::string, 4)  // up to 4 thought lines
 
 #ifdef SERVERSIDE
-// Server-only struct for tracking recent damage taken by this entity.
-// Now safe: EntityID is a complete type above.
+// Server-only struct for tracking recent damage taken by this entity
 struct RecentDamage {
     EntityID attacker;
     float amount;
@@ -158,7 +158,8 @@ struct RecentDamage {
     SINGLE(deleted_petals, circ_arr_t, ={}) \
     SINGLE(is_bot, uint8_t, =0) \
     SINGLE(respawn_cooldown, game_tick_t, =0) \
-    MULTIPLE(recent_damage, RecentDamage, 8, ={})
+    MULTIPLE(recent_damage, RecentDamage, 8, ={}) \
+    MULTIPLE(thought_timers, game_tick_t, 4, ={})
 #else
 #define PER_EXTRA_FIELD \
     SINGLE(last_damaged_time, double, =0) \

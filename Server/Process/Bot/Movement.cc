@@ -4,6 +4,7 @@
 #include <Shared/Simulation.hh>
 #include <Shared/StaticData.hh>
 #include <Shared/Map.hh>
+#include <Helpers/Math.hh>
 
 void engage_with_petals(Simulation *sim, Entity &player, EntityID target_id) {
     BitMath::set(player.input, InputFlags::kAttacking);
@@ -65,4 +66,74 @@ void apply_idle_march_right(Entity &player) {
     right.set_magnitude(PLAYER_ACCELERATION * 0.6f);
     player.acceleration = right;
     player.set_angle(0.0f);
+}
+
+// Helper: nearest hostile mob within radius, returns pointer or nullptr
+static Entity *nearest_hostile_mob(Simulation *sim, Entity const &player, float radius, float &out_dist) {
+    Entity *best = nullptr;
+    float min_dist = radius;
+    sim->spatial_hash.query(player.get_x(), player.get_y(), radius, radius, [&](Simulation *sim2, Entity &ent){
+        if (!sim2->ent_alive(ent.id)) return;
+        if (!ent.has_component(kMob)) return;
+        if (ent.get_team() == player.get_team()) return;
+        if (ent.immunity_ticks > 0) return;
+        float d = Vector(ent.get_x() - player.get_x(), ent.get_y() - player.get_y()).magnitude();
+        if (d < min_dist) { min_dist = d; best = &ent; }
+    });
+    out_dist = min_dist;
+    return best;
+}
+
+// Helper: smooth steering towards target angle, with optional avoidance repulsion
+// IMPORTANT: This function MUST NOT write to player.heading_angle (that controls petal orbit).
+static void steer_with_avoidance(Simulation *sim, Entity &player, float target_angle, float speed_scale) {
+    // Base desired direction from target angle
+    Vector desired_dir(cosf(target_angle), sinf(target_angle));
+
+    // Awareness: avoid getting too close to mobs while wandering/searching
+    float dist = 0.0f;
+    Entity *threat = nearest_hostile_mob(sim, player, 220.0f, dist);
+    if (threat) {
+        Vector away(player.get_x() - threat->get_x(), player.get_y() - threat->get_y());
+        float safe = player.get_radius() + threat->get_radius() + 30.0f;
+        float soft = player.get_radius() + threat->get_radius() + 100.0f;
+
+        float repel = 0.0f;
+        if (dist < safe && dist > 1.0f) {
+            repel = fclamp((safe - dist) / safe, 0.0f, 1.0f) * 1.5f; // strong push if too close
+        } else if (dist < soft && dist > 1.0f) {
+            repel = fclamp((soft - dist) / soft, 0.0f, 1.0f) * 0.6f; // gentle steer if a bit close
+        }
+
+        if (repel > 0.0f) {
+            away.normalize();
+            desired_dir = desired_dir * 1.0f + away * repel;
+        }
+    }
+
+    // Smooth heading change using the body's current angle (NOT heading_angle)
+    float target = desired_dir.angle();
+    float current = player.get_angle();
+    float new_angle = angle_lerp(current, target, 0.12f);
+
+    // Apply acceleration and visual facing
+    Vector final_dir(cosf(new_angle), sinf(new_angle));
+    player.input = 0;
+    player.acceleration = final_dir * (PLAYER_ACCELERATION * speed_scale);
+    player.set_angle(new_angle);
+}
+
+// Public: wandering that meanders around (no “marching right”), with mild bias if desired
+void apply_wander_biased(Simulation *sim, Entity &player, float bias_right, float speed_scale) {
+    // Build a smooth pseudo-noise heading from lifetime and a stable per-entity phase
+    float t = (float)player.lifetime / (float)TPS;
+    float phase1 = (player.id.id * 0.123f) + 1.234f;
+    float phase2 = (player.id.id * 0.321f) + 4.321f;
+
+    // Two sines at incommensurate frequencies => gentle, continuous direction changes
+    float n = sinf(t * 0.7f + phase1) * 0.7f + sinf(t * 1.3f + phase2) * 0.3f; // [-1..1]
+    float bias = (bias_right - 0.5f) * 0.6f; // map [0..1] -> ~[-0.3..+0.3] rad
+    float target_angle = n * (float)M_PI + bias;
+
+    steer_with_avoidance(sim, player, target_angle, speed_scale);
 }

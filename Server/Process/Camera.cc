@@ -6,13 +6,15 @@
 #include <Shared/Simulation.hh>
 #include <Shared/StaticData.hh>
 
+#include <string>
+
 void tick_camera_behavior(Simulation *sim, Entity &ent) {
     // Bot camera auto-respawn: if this camera is a bot's and its player is dead, respawn after a short delay.
     if (ent.is_bot && !sim->ent_alive(ent.get_player())) {
         if (ent.respawn_cooldown == 0) {
             Entity &player = alloc_player(sim, ent.get_team());
             player.is_bot = 1;
-            player.set_name("Bot");
+            player.set_name(std::string("Bot ") + std::to_string(ent.id.id)); // unique and consistent
             player_spawn(sim, ent, player);
             ent.respawn_cooldown = TPS / 2; // small cooldown to avoid instant loops
         } else {

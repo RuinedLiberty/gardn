@@ -3,8 +3,10 @@
 #include <Server/PetalTracker.hh>
 #include <Shared/StaticData.hh>
 #include <Shared/Entity.hh>
+#include <algorithm>
+#include <cstring>
 
-static uint8_t has_any_petals(Entity &player) {
+static uint8_t _has_any_petals(Entity &player) {
     uint32_t active = player.get_loadout_count();
     uint32_t total = active + MAX_SLOT_COUNT;
     for (uint32_t i = 0; i < total; ++i)
@@ -25,50 +27,52 @@ float rarity_weight(uint8_t rarity) {
     }
 }
 
+// Rarity-only score: higher rarity strictly preferred.
 float petal_score(PetalID::T id) {
     if (id == PetalID::kNone) return 0.0f;
     if (id >= PetalID::kNumPetals) return 0.0f;
     auto const &pd = PETAL_DATA[id];
-    float score = rarity_weight(pd.rarity) * 10.0f;
-    score += pd.damage * 0.4f;
-    score += pd.attributes.constant_heal * 6.0f;
-    if (pd.count > 1) score += (pd.count - 1) * 1.0f;
-    return score;
+    return rarity_weight(pd.rarity);
+}
+
+bool is_healing_petal(PetalID::T id) {
+    if (id == PetalID::kNone || id >= PetalID::kNumPetals) return false;
+    auto const &pd = PETAL_DATA[id];
+    return pd.attributes.constant_heal > 0.0f || std::strcmp(pd.name ? pd.name : "", "Rose") == 0;
+}
+
+bool has_healing_petal(Entity &player) {
+    uint32_t active = player.get_loadout_count();
+    uint32_t total = active + MAX_SLOT_COUNT;
+    for (uint32_t i = 0; i < total; ++i) {
+        if (is_healing_petal(player.get_loadout_ids(i))) return true;
+    }
+    return false;
+}
+
+bool ensure_heal_equipped(Entity &player) {
+    uint32_t active = player.get_loadout_count();
+    for (uint32_t i = 0; i < active; ++i)
+        if (is_healing_petal(player.get_loadout_ids(i))) return true;
+
+    int reserve_idx = -1;
+    for (uint32_t i = active; i < active + MAX_SLOT_COUNT; ++i) {
+        if (is_healing_petal(player.get_loadout_ids(i))) { reserve_idx = (int)i; break; }
+    }
+    if (reserve_idx < 0) return false;
+
+    PetalID::T heal = player.get_loadout_ids((uint32_t)reserve_idx);
+    PetalID::T displaced = player.get_loadout_ids(0);
+    player.set_loadout_ids(0, heal);
+    player.set_loadout_ids((uint32_t)reserve_idx, displaced);
+    return true;
 }
 
 void ensure_basics_if_empty(Entity &player) {
-    if (has_any_petals(player)) return;
+    if (_has_any_petals(player)) return;
     uint32_t active = player.get_loadout_count();
     for (uint32_t i = 0; i < active; ++i)
         player.set_loadout_ids(i, PetalID::kBasic);
-}
-
-void rebalance_loadout(Entity &player) {
-    uint32_t active = player.get_loadout_count();
-    uint32_t total = active + MAX_SLOT_COUNT;
-    if (active == 0 || total == 0) return;
-
-    struct SlotScore { uint32_t idx; float score; PetalID::T id; };
-    SlotScore scores[2 * MAX_SLOT_COUNT] = {};
-    uint32_t n = 0;
-
-    for (uint32_t i = 0; i < total; ++i) {
-        PetalID::T id = player.get_loadout_ids(i);
-        scores[n++] = { i, petal_score(id), id };
-    }
-
-    std::sort(scores, scores + n, [](auto const &a, auto const &b){ return a.score > b.score; });
-
-    PetalID::T desired[2 * MAX_SLOT_COUNT] = { PetalID::kNone };
-    for (uint32_t pos = 0; pos < active && pos < n; ++pos)
-        desired[pos] = scores[pos].id;
-
-    uint32_t write = active;
-    for (uint32_t k = active; k < n && write < (active + MAX_SLOT_COUNT); ++k)
-        desired[write++] = scores[k].id;
-
-    for (uint32_t i = 0; i < total; ++i)
-        player.set_loadout_ids(i, desired[i]);
 }
 
 static void trash_petal(Simulation *sim, Entity &player, uint32_t pos) {
@@ -79,29 +83,6 @@ static void trash_petal(Simulation *sim, Entity &player, uint32_t pos) {
         PetalTracker::remove_petal(sim, player.deleted_petals[0]);
     player.deleted_petals.push_back(old_id);
     player.set_loadout_ids(pos, PetalID::kNone);
-}
-
-void maybe_trash_unwanted(Simulation *sim, Entity &player) {
-    uint32_t active = player.get_loadout_count();
-    uint32_t total = active + MAX_SLOT_COUNT;
-    if (active == 0) return;
-
-    float worst_active = 1e9f;
-    for (uint32_t i = 0; i < active; ++i) {
-        worst_active = std::min(worst_active, petal_score(player.get_loadout_ids(i)));
-    }
-    if (worst_active == 1e9f) worst_active = 0.0f;
-
-    float trash_threshold = worst_active * 0.5f;
-
-    for (uint32_t i = active; i < total; ++i) {
-        PetalID::T id = player.get_loadout_ids(i);
-        if (id == PetalID::kNone) continue;
-        if (petal_score(id) < trash_threshold) {
-            trash_petal(sim, player, i);
-            break;
-        }
-    }
 }
 
 bool has_empty_slot(Entity &player) {
@@ -138,12 +119,57 @@ bool try_ensure_space_for_drop(Simulation *sim, Entity &player,
                                float worst_reserve_score, int worst_reserve_idx) {
     if (has_empty_slot(player)) return true;
 
-    if (worst_reserve_idx >= 0 && drop_score > worst_reserve_score + 0.5f) {
-        trash_petal(sim, player, (uint32_t) worst_reserve_idx);
-        return true;
+    if (worst_reserve_idx >= 0) {
+        PetalID::T id = player.get_loadout_ids((uint32_t) worst_reserve_idx);
+        if (!is_healing_petal(id) && drop_score > worst_reserve_score + 0.1f) {
+            trash_petal(sim, player, (uint32_t) worst_reserve_idx);
+            return true;
+        }
     }
-    if (worst_active_idx >= 0 && drop_score > worst_active_score + 4.0f) {
-        trash_petal(sim, player, (uint32_t) worst_active_idx);
+    if (worst_active_idx >= 0) {
+        PetalID::T id = player.get_loadout_ids((uint32_t) worst_active_idx);
+        if (!is_healing_petal(id) && drop_score > worst_active_score + 0.5f) {
+            trash_petal(sim, player, (uint32_t) worst_active_idx);
+            return true;
+        }
+    }
+    return false;
+}
+
+// Promote exactly one reserve petal (highest rarity) into the worst active slot if it's strictly better.
+// No global resorting; at most one swap per call to avoid churn.
+bool promote_highest_rarity_once(Entity &player) {
+    uint32_t active = player.get_loadout_count();
+    uint32_t total  = active + MAX_SLOT_COUNT;
+    if (active == 0) return false;
+
+    // Find worst active by rarity
+    int worst_active_idx = -1;
+    float worst_active_score = 1e9f;
+    for (uint32_t i = 0; i < active; ++i) {
+        PetalID::T id = player.get_loadout_ids(i);
+        float s = petal_score(id);
+        if (s < worst_active_score) { worst_active_score = s; worst_active_idx = (int)i; }
+    }
+
+    // Find best reserve by rarity
+    int best_reserve_idx = -1;
+    float best_reserve_score = -1.0f;
+    for (uint32_t i = active; i < total; ++i) {
+        PetalID::T id = player.get_loadout_ids(i);
+        if (id == PetalID::kNone) continue;
+        float s = petal_score(id);
+        if (s > best_reserve_score) { best_reserve_score = s; best_reserve_idx = (int)i; }
+    }
+
+    if (worst_active_idx < 0 || best_reserve_idx < 0) return false;
+
+    // Small epsilon so equal-rarity swaps don't occur
+    if (best_reserve_score > worst_active_score + 0.05f) {
+        PetalID::T a = player.get_loadout_ids((uint32_t)worst_active_idx);
+        PetalID::T b = player.get_loadout_ids((uint32_t)best_reserve_idx);
+        player.set_loadout_ids((uint32_t)worst_active_idx, b);
+        player.set_loadout_ids((uint32_t)best_reserve_idx, a);
         return true;
     }
     return false;

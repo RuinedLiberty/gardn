@@ -26,6 +26,7 @@ set(SOURCES
     Process/Bot/Inventory.cc
     Process/Bot/Targeting.cc
     Process/Bot/Movement.cc
+    Process/Bot/Priorities.cc
     Client.cc
     Game.cc
     Main.cc

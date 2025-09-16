@@ -9,6 +9,8 @@
 #include <Shared/Entity.hh>
 #include <Shared/Map.hh>
 
+#include <string>
+
 static void _update_client(Simulation *sim, Client *client) {
     if (client == nullptr) return;
     if (!client->verified) return;
@@ -84,7 +86,7 @@ void GameInstance::init() {
         }
         Entity &player = alloc_player(&simulation, cam.get_team());
         player.is_bot = 1;
-        player.set_name("Bot");
+        player.set_name(std::string("Bot ") + std::to_string(cam.id.id)); // unique and consistent
         player_spawn(&simulation, cam, player);
     }
 }
